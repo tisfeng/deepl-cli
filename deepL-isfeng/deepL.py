@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 import random
 import time
+
 import click
 import requests
 
@@ -56,7 +59,6 @@ if __name__ == '__main__':
 # python3 deepL.py heel
 
 # python3 deepL.py heel --source_language EN --target_language ZH 
-
 
 #==================================== Params ==================================== 
 """
