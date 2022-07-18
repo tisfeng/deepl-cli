@@ -1,50 +1,61 @@
 import random
 import time
-
 import click
 import requests
 
 
-# Use click to define the command line interface.
 @click.command()
 @click.argument("text")
 @click.option("--source_language", default="auto", help="Source language")
 @click.option("--target_language", default="ZH", help="Target language")
 def deepLTranslate(text, source_language, target_language):    
-    print(f"{source_language} --> {target_language}: {text}")
-    print()
+    print(f"{source_language} --> {target_language}: {text}\n")
     
     text = '"' + text + '"'
     source_language = '"' + source_language + '"'
     target_language = '"' + target_language + '"'
 
-    data = '{"jsonrpc":"2.0","method": "LMT_handle_jobs","params":{"jobs":[{"kind":"default","sentences":[{"text": ' + text + ', "id": 0, "prefix": ""}],"raw_en_context_before":[],"raw_en_context_after":[],"preferred_num_beams":4}],"lang":{"preference":{"weight": {},"default": "default"},"source_lang_computed":' + source_language + ',"target_lang":' + target_language + '},"priority":1,"commonJobParams":{ "browserType": 1, "formality": null },"timestamp":' + str(
+    params = '{"jsonrpc":"2.0","method": "LMT_handle_jobs","params":{"jobs":[{"kind":"default","sentences":[{"text": ' + text + ', "id": 0, "prefix": ""}],"raw_en_context_before":[],"raw_en_context_after":[],"preferred_num_beams":4}],"lang":{"preference":{"weight": {},"default": "default"},"source_lang_computed":' + source_language + ',"target_lang":' + target_language + '},"priority":1,"commonJobParams":{ "browserType": 1, "formality": null },"timestamp":' + str(
         int(time.time() * 10000)) + '},"id":' + str(
             random.randint(1, 100000000)) + '}'
-    # print("data:" + data)
+    # print("params:" + params)
 
-    result = requests.post('https://www2.deepl.com/jsonrpc',
+    response = requests.post('https://www2.deepl.com/jsonrpc',
                       headers={'content-type': 'application/json'},
-                      data=data.encode()).json()
+                      data=params.encode()).json()
     
-    if 'error' in result:
-        print("error:", result.json()['error'])
+    if 'error' in response:
+        # error: {'code': 1042912, 'message': 'Too many requests'}
+        print("error:", response['error']) 
         return   
-    
-    
+        
     # print("result:", result)
-    beams = result['result']['translations'][0]['beams']
+    beams = response['result']['translations'][0]['beams']
     translations = []    
     for beam in beams:
         translation = beam['sentences'][0]['text']
         print(translation)
         translations.append(translation)
         
+    detected_source_language = response['result']['source_lang']
+    if detected_source_language != source_language:
+        print("\nDetected source language:", detected_source_language)
+        
     return translations
 
   
 if __name__ == '__main__':    
     deepLTranslate()
+
+
+#==================================== Test ==================================== 
+# python3 deepL.py log   
+
+# python3 deepL.py 优雅 --target_language EN  
+
+# python3 deepL.py heel
+
+# python3 deepL.py heel --source_language EN --target_language ZH 
 
 
 #==================================== Params ==================================== 
