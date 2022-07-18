@@ -5,6 +5,7 @@ import time
 
 import click
 import requests
+import json
 
 
 @click.command()
@@ -14,18 +15,48 @@ import requests
 def deepLTranslate(text, source_language, target_language):    
     print(f"{source_language} --> {target_language}: {text}\n")
     
-    text = '"' + text + '"'
-    source_language = '"' + source_language + '"'
-    target_language = '"' + target_language + '"'
-
-    params = '{"jsonrpc":"2.0","method": "LMT_handle_jobs","params":{"jobs":[{"kind":"default","sentences":[{"text": ' + text + ', "id": 0, "prefix": ""}],"raw_en_context_before":[],"raw_en_context_after":[],"preferred_num_beams":4}],"lang":{"preference":{"weight": {},"default": "default"},"source_lang_computed":' + source_language + ',"target_lang":' + target_language + '},"priority":1,"commonJobParams":{ "browserType": 1, "formality": null },"timestamp":' + str(
-        int(time.time() * 10000)) + '},"id":' + str(
-            random.randint(1, 100000000)) + '}'
+    params = json.dumps({
+      "jsonrpc": "2.0",
+      "method": "LMT_handle_jobs",
+      "params": {
+            "jobs": [
+              {
+                  "kind": "default",
+                  "sentences": [
+                    {
+                        "text": text,
+                        "id": 0,
+                        "prefix": ""
+                    }
+                  ],
+                  "raw_en_context_before": [],
+                  "raw_en_context_after": [],
+                  "preferred_num_beams": 4
+              }
+            ],
+            "lang": {
+              "preference": {
+                  "weight": {},
+                  "default": "default"
+              },
+              "source_lang_computed": source_language,
+              "target_lang": target_language
+            },
+            "priority": -1,
+            "commonJobParams": {
+              "browserType": 1,
+              "formality": None
+            },
+            "timestamp": int(time.time() * 10000)
+        },
+      "id": random.randint(1, 100000000)
+    })
+    
     # print("params:" + params)
 
     response = requests.post('https://www2.deepl.com/jsonrpc',
                       headers={'content-type': 'application/json'},
-                      data=params.encode()).json()
+                      data=params).json()
     
     if 'error' in response:
         # error: {'code': 1042912, 'message': 'Too many requests'}
@@ -52,13 +83,16 @@ if __name__ == '__main__':
 
 
 #==================================== Test ==================================== 
-# python3 deepL.py log   
+"""
+python3 deepL.py log  
 
-# python3 deepL.py 优雅 --target_language EN  
+python3 deepL.py 优雅 --target_language EN  
 
-# python3 deepL.py heel
+python3 deepL.py heel
 
-# python3 deepL.py heel --source_language EN --target_language ZH 
+python3 deepL.py heel --source_language EN --target_language ZH 
+
+"""
 
 #==================================== Params ==================================== 
 """
@@ -99,7 +133,6 @@ if __name__ == '__main__':
   "id": 11000045
 }
 """
-
 
 #==================================== Result ==================================== 
 """
