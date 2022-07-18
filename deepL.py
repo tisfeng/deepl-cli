@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 
+import json
 import random
 import time
 
 import click
 import requests
-import json
+from colorama import Back, Fore, Style, init
 
+init()
 
 @click.command()
 @click.argument("text")
 @click.option("--source_language", default="auto", help="Source language")
 @click.option("--target_language", default="ZH", help="Target language")
-def deepLTranslate(text, source_language, target_language):    
+def deepl_translate(text, source_language, target_language):    
     print(f"{source_language} --> {target_language}: {text}\n")
     
     params = json.dumps({
@@ -51,7 +53,6 @@ def deepLTranslate(text, source_language, target_language):
         },
       "id": random.randint(1, 100000000)
     })
-    
     # print("params:" + params)
 
     response = requests.post('https://www2.deepl.com/jsonrpc',
@@ -65,21 +66,27 @@ def deepLTranslate(text, source_language, target_language):
         
     # print("result:", result)
     beams = response['result']['translations'][0]['beams']
-    translations = []    
-    for beam in beams:
+    translations = []
+    
+    for i, beam in enumerate(beams):
         translation = beam['sentences'][0]['text']
-        print(translation)
+        if i == 0:
+            print(Fore.GREEN + Style.BRIGHT + translation + '\n')
+        else:
+            print(Fore.YELLOW + Style.DIM + translation)
         translations.append(translation)
-        
+     
+    print(Style.RESET_ALL)
+
     detected_source_language = response['result']['source_lang']
     if detected_source_language != source_language:
-        print("\nDetected source language:", detected_source_language)
+        print("Detected source language:", Fore.CYAN + detected_source_language)
         
     return translations
 
   
 if __name__ == '__main__':    
-    deepLTranslate()
+    deepl_translate()
 
 
 #==================================== Test ==================================== 
