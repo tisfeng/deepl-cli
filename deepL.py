@@ -55,9 +55,12 @@ def deepl_translate(text, source_language, target_language):
     })
     # print("params:" + params)
 
+    # Sometimes the request fails because the same IP is requested too many times, so we can try to use a proxy.
+    proxies = { "http":"http://127.0.0.1:6152", "https": "http://127.0.0.1:6152", } 
     response = requests.post('https://www2.deepl.com/jsonrpc',
                       headers={'content-type': 'application/json'},
-                      data=params).json()
+                      data=params,
+                      proxies=proxies).json()
     
     if 'error' in response:
         # error: {'code': 1042912, 'message': 'Too many requests'}
