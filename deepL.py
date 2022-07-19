@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import json
 import random
 import time
 
@@ -19,7 +18,7 @@ def deepl_translate(text, source_language, target_language):
     text = " ".join(text)
     print(f"{source_language} --> {target_language}: {text}\n")
     
-    params = json.dumps({
+    params = {
       "jsonrpc": "2.0",
       "method": "LMT_handle_jobs",
       "params": {
@@ -54,14 +53,13 @@ def deepl_translate(text, source_language, target_language):
             "timestamp": int(time.time() * 10000)
         },
       "id": random.randint(1, 100000000)
-    })
+    }
     # print("params:" + params)
 
     # Sometimes the request fails because the same IP is requested too many times, so we can try to use a proxy.
     proxies = { "http":"http://127.0.0.1:6152", "https": "http://127.0.0.1:6152", } 
     response = requests.post('https://www2.deepl.com/jsonrpc',
-                      headers={'content-type': 'application/json'},
-                      data=params,
+                      json=params,  # use json type means set 'content-type' to 'application/json'
                       # proxies=proxies  # uncomment this line to use a proxy
                       ).json()
     
