@@ -11,10 +11,12 @@ from colorama import Back, Fore, Style, init
 init()
 
 @click.command()
-@click.argument("text")
+@click.argument("text", nargs=-1)
 @click.option("--source_language", default="auto", help="Source language")
 @click.option("--target_language", default="ZH", help="Target language")
-def deepl_translate(text, source_language, target_language):    
+def deepl_translate(text, source_language, target_language):
+    # text is a tuple, so we need to join it
+    text = " ".join(text)
     print(f"{source_language} --> {target_language}: {text}\n")
     
     params = json.dumps({
