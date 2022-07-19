@@ -60,7 +60,8 @@ def deepl_translate(text, source_language, target_language):
     response = requests.post('https://www2.deepl.com/jsonrpc',
                       headers={'content-type': 'application/json'},
                       data=params,
-                      proxies=proxies).json()
+                      # proxies=proxies  # uncomment this line to use a proxy
+                      ).json()
     
     if 'error' in response:
         # error: {'code': 1042912, 'message': 'Too many requests'}
@@ -94,7 +95,7 @@ if __name__ == '__main__':
 
 #==================================== Test ==================================== 
 """
-python3 deepL.py log  
+python3 deepL.py good  
 
 python3 deepL.py 优雅 --target_language EN  
 
@@ -102,6 +103,7 @@ python3 deepL.py heel
 
 python3 deepL.py heel --source_language EN --target_language ZH 
 
+python3 deepL.py My heart is slightly larger than the whole universe.
 """
 
 #==================================== Params ==================================== 
