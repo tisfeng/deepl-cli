@@ -10,15 +10,16 @@ from colorama import Back, Fore, Style, init
 init()
 
 # DeepL supported languages https://www.deepl.com/zh/docs-api/translating-text/
-source_language = ['auto','ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
-target_language = ['ZH','EN-US','EN-GB','JA','FR','ES','PT-PT','PT-BR','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+target_language = ['ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+source_language = target_language.append('auto')
 
 @click.command()
 @click.argument("text", nargs=-1)
 @click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_language))
 @click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_language))
 
-def deepl_translate(text, source_language, target_language):
+# The default is to translate to Chinese. 
+def deepl_translate(text, source_language, target_language):  
     # text is a tuple, so we need to join it
     text = " ".join(text)
     print(f"{source_language} --> {target_language}: {text}\n")
@@ -62,7 +63,7 @@ def deepl_translate(text, source_language, target_language):
     # print("params:" + params)
 
     # Sometimes the request fails because the same IP is requested too many times, so we can try to use a proxy.
-    proxies = { "http":"http://127.0.0.1:6152", "https": "http://127.0.0.1:6152", } 
+    # proxies = { "http":"http://127.0.0.1:6152", "https": "http://127.0.0.1:6152", } 
     response = requests.post('https://www2.deepl.com/jsonrpc',
                       json=params,  # use json type means set the header 'content-type' to 'application/json'
                       # proxies=proxies  # uncomment this line to use a proxy
@@ -102,7 +103,7 @@ if __name__ == '__main__':
 """
 python3 deepL.py good
 
-python3 deepL.py 优雅 --source-language EN
+python3 deepL.py 优雅 --target-language EN
 
 python3 deepL.py heel
 
