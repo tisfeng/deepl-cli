@@ -73,7 +73,7 @@ def deepl_translate(text, source_language, target_language):
     
     if 'error' in response:
         # error: {'code': 1042912, 'message': 'Too many requests'}
-        print("error:", response['error']) 
+        print(Fore.RED +"error:", response['error']) 
         return   
         
     # print("result:", result)
