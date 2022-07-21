@@ -2,6 +2,7 @@
 
 import random
 import time
+from copy import deepcopy
 
 import click
 import requests
@@ -10,13 +11,14 @@ from colorama import Back, Fore, Style, init
 init()
 
 # DeepL supported languages https://www.deepl.com/zh/docs-api/translating-text/
-target_language = ['ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
-source_language = target_language.append('auto')
+target_languages = ['ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+source_languages = deepcopy(target_languages)
+source_languages.append('auto')
 
 @click.command()
 @click.argument("text", nargs=-1)
-@click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_language))
-@click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_language))
+@click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_languages))
+@click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_languages))
 
 # The default is to translate to Chinese. 
 def deepl_translate(text, source_language, target_language):  
