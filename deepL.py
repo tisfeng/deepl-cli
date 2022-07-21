@@ -9,10 +9,15 @@ from colorama import Back, Fore, Style, init
 
 init()
 
+# DeepL supported languages https://www.deepl.com/zh/docs-api/translating-text/
+source_language = ['auto','ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+target_language = ['ZH','EN-US','EN-GB','JA','FR','ES','PT-PT','PT-BR','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+
 @click.command()
 @click.argument("text", nargs=-1)
-@click.option("--source_language", default="auto", help="Source language")
-@click.option("--target_language", default="ZH", help="Target language")
+@click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_language))
+@click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_language))
+
 def deepl_translate(text, source_language, target_language):
     # text is a tuple, so we need to join it
     text = " ".join(text)
@@ -59,7 +64,7 @@ def deepl_translate(text, source_language, target_language):
     # Sometimes the request fails because the same IP is requested too many times, so we can try to use a proxy.
     proxies = { "http":"http://127.0.0.1:6152", "https": "http://127.0.0.1:6152", } 
     response = requests.post('https://www2.deepl.com/jsonrpc',
-                      json=params,  # use json type means set 'content-type' to 'application/json'
+                      json=params,  # use json type means set the header 'content-type' to 'application/json'
                       # proxies=proxies  # uncomment this line to use a proxy
                       ).json()
     
@@ -95,15 +100,18 @@ if __name__ == '__main__':
 
 #==================================== Test ==================================== 
 """
-python3 deepL.py good  
+python3 deepL.py good
 
-python3 deepL.py 优雅 --target_language EN  
+python3 deepL.py 优雅 --source-language EN
 
 python3 deepL.py heel
 
-python3 deepL.py heel --source_language EN --target_language ZH 
+python3 deepL.py heel --source-language EN --target-language ZH
 
 python3 deepL.py My heart is slightly larger than the whole universe.
+
+#error
+python3 deepL.py 优雅 --target-language FF
 """
 
 #==================================== Params ==================================== 
