@@ -2,7 +2,7 @@
 
 A simple DeepL Translation command line program written in Python that does not require key.
 
-一个使用 `Pythone` 编写、无需 auth_key 的 DeepL 翻译命令行工具。
+一个使用 `Python` 编写、无需 auth_key 的 DeepL 翻译命令行工具。
 
 ## Usage
 
