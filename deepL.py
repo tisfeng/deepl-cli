@@ -20,7 +20,7 @@ source_languages.append('auto')
 @click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_languages))
 @click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_languages))
 
-# The default is to translate to Chinese. 
+# Default is to translate to Chinese. If no source language is specified, it will autodetect the source language.
 def deepl_translate(text, source_language, target_language):  
     # text is a tuple, so we need to join it
     text = " ".join(text)
