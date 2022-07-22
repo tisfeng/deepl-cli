@@ -11,7 +11,7 @@ from colorama import Back, Fore, Style, init
 init()
 
 # DeepL supported languages https://www.deepl.com/zh/docs-api/translating-text/
-target_languages = ['ZH','EN','JA','FR','ES','PT','IT','DE','RU','SV','RO','SK','NL','HU','EL','DA','FI','PL','CS']
+target_languages = ['zh', 'en', 'ja', 'fr', 'es', 'pt', 'it', 'de', 'ru', 'sv', 'ro', 'sk', 'nl', 'hu', 'el', 'da', 'fi', 'pl', 'cs']
 source_languages = deepcopy(target_languages)
 source_languages.append('auto')
 
@@ -105,11 +105,11 @@ if __name__ == '__main__':
 """
 python3 deepL.py good
 
-python3 deepL.py 优雅 --target-language EN
+python3 deepL.py 优雅 --target-language en
 
 python3 deepL.py heel
 
-python3 deepL.py heel --source-language EN --target-language ZH
+python3 deepL.py heel --source-language EN --target-language zh
 
 python3 deepL.py My heart is slightly larger than the whole universe.
 
