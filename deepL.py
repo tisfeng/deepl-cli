@@ -11,20 +11,21 @@ from colorama import Back, Fore, Style, init
 
 init()
 
-# DeepL supported languages https://www.deepl.com/zh/docs-api/translating-text/
 target_languages = ['zh', 'en', 'ja', 'fr', 'es', 'pt', 'it', 'de', 'ru', 'sv', 'ro', 'sk', 'nl', 'hu', 'el', 'da', 'fi', 'pl', 'cs']
 source_languages = deepcopy(target_languages)
 source_languages.append('auto')
 
 @click.command()
 @click.argument("text", nargs=-1)
-@click.option("--source-language", "-s", show_default=True, default="auto", help="Source Translation language", type=click.Choice(source_languages))
-@click.option("--target-language", "-t", show_default=True, default="zh", help="Target Translation language", type=click.Choice(target_languages))
+@click.option("--source-language", "-s", show_default=True, default="auto", help="Source language", type=click.Choice(source_languages))
+@click.option("--target-language", "-t", show_default=True, default="zh", help="Target language", type=click.Choice(target_languages))
 
 # Default is to translate to Chinese. If no source language is specified, it will autodetect the source language.
-def deepl_translate(text, source_language, target_language):  
+def deepl_translate(text, source_language, target_language): 
     # text is a tuple, so we need to join it
     text = " ".join(text)
+    if len(text) == 0:
+      text = 'hello'
     print(f"{source_language} --> {target_language}: {text}\n")
     
     params = {
