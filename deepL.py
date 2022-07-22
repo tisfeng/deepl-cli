@@ -5,6 +5,7 @@ import time
 from copy import deepcopy
 
 import click
+from prompt_toolkit import prompt
 import requests
 from colorama import Back, Fore, Style, init
 
@@ -17,8 +18,8 @@ source_languages.append('auto')
 
 @click.command()
 @click.argument("text", nargs=-1)
-@click.option("--source-language", default="auto", help="Source language", type=click.Choice(source_languages))
-@click.option("--target-language", default="ZH", help="Target language", type=click.Choice(target_languages))
+@click.option("--source-language", "-s", show_default=True, default="auto", help="Source Translation language", type=click.Choice(source_languages))
+@click.option("--target-language", "-t", show_default=True, default="zh", help="Target Translation language", type=click.Choice(target_languages))
 
 # Default is to translate to Chinese. If no source language is specified, it will autodetect the source language.
 def deepl_translate(text, source_language, target_language):  
@@ -105,16 +106,16 @@ if __name__ == '__main__':
 """
 python3 deepL.py good
 
-python3 deepL.py 优雅 --target-language en
+python3 deepL.py 优雅 -s en
 
 python3 deepL.py heel
 
-python3 deepL.py heel --source-language EN --target-language zh
+python3 deepL.py heel -s en -t zh
 
 python3 deepL.py My heart is slightly larger than the whole universe.
 
 #error
-python3 deepL.py 优雅 --target-language FF
+python3 deepL.py 优雅 -t ff
 """
 
 #==================================== Params ==================================== 
