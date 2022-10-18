@@ -14,7 +14,7 @@ A simple DeepL Translation command line program written in Python that does not 
 
 **Default is to translate text to `Chinese`. If no source language is specified, it will autodetect the source language.**
 
-```python
+```bash
 python3 deepL.py good
 ```
 
@@ -22,7 +22,7 @@ python3 deepL.py good
 
 ### Translate word to designated language
 
-```python
+```bash
 python3 deepL.py 优雅 -t en
 ```
 
@@ -30,7 +30,7 @@ python3 deepL.py 优雅 -t en
 
 ### Auto detect source language
 
-```python
+```bash
 python3 deepL.py heel
 ```
 
@@ -38,7 +38,7 @@ python3 deepL.py heel
 
 ### Translate word from designated language to designated language
 
-```python
+```bash
 python3 deepL.py heel -s en -t zh
 ```
 
@@ -46,7 +46,7 @@ python3 deepL.py heel -s en -t zh
 
 ### Translate Text
 
-```python
+```bash
 python3 deepL.py My heart is slightly larger than the whole universe.
 ```
 
