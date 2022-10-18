@@ -6,32 +6,32 @@ A simple DeepL Translation command line program written in Python that does not 
 
 ## Usage
 
-![image-20220722001822359](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220722001822359-1658420302.png)
+![image-20221018202931345](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20221018202931345-1666096171.png)
 
 ## Examples
 
-**Default is to translate to Chinese. If no source language is specified, it will autodetect the source language.**
+**Default is to translate text to `Chinese`. If no source language is specified, it will autodetect the source language.**
 
 ```python
 python3 deepL.py good
 ```
-![image-20220721232029678](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220721232029678-1658416830.png)
+![iShot_2022-10-18_18.26.15-1666089417](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/iShot_2022-10-18_18.26.15-1666089417.png)
 
 
 ```pythone
-python3 deepL.py 优雅 --target-language EN
+python3 deepL.py 优雅 --t en
 ```
-![image-20220722002541987](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220722002541987-1658420742.png)
+![iShot_2022-10-18_18.26.48](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/iShot_2022-10-18_18.26.48-1666089479.png)
 
 ```pythone
 python3 deepL.py heel
 ```
-![image-20220722001531505](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220722001531505-1658420131.png)
+![iShot_2022-10-18_18.27.28](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/iShot_2022-10-18_18.27.28-1666095985.png)
 
 ```pythone
-python3 deepL.py heel --source-language EN --target-language ZH
+python3 deepL.py heel -s en -t zh
 ```
-![image-20220722001607452](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220722001607452-1658420167.png)
+![iShot_2022-10-18_18.27.59](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/iShot_2022-10-18_18.27.59-1666096054.png)
 
 ```pythone
 python3 deepL.py My heart is slightly larger than the whole universe.
@@ -40,6 +40,6 @@ python3 deepL.py My heart is slightly larger than the whole universe.
 
 
 
-*Sometimes the request fails because the same IP is requested too many times...😓*
+> Note ⚠️: *Sometimes the request fails because the same IP is requested too many times...😓*
 
 ![image-20220722001638112](https://raw.githubusercontent.com/tisfeng/ImageBed/main/uPic/image-20220722001638112-1658420198.png)
